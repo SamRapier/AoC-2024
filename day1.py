@@ -36,17 +36,39 @@ def calcDiff(list1, list2):
         diffCalc += abs(list1[i] - list2[i])
     return diffCalc
 
-def problem1():
-    inputList = openFile('inputs/input1.txt')
-    # list1 = [1, 7, 4, 1, 10, 9, -2]
-    # list2 = [4, 5, 8, 3, 2, 1, 0]
+def frequency(inputList):
+    freqDict = {}
+    for i in inputList:
+        if i in freqDict:
+            freqDict[i] += 1
+        else:
+            freqDict[i] = 1
+    return freqDict
+
+def calcSimilarity(inputList, freqDict):
+    similarityScore = 0
+    for i in inputList:
+        if i in freqDict:
+            similarityScore += i * freqDict[i]
+
+    return similarityScore
+
+def getSortedLists(fileName):
+    inputList = openFile(f"inputs/{fileName}.txt")
     list1, list2 = splitList(inputList)
     list1 = quickSort(list1)
     list2 = quickSort(list2)
-    # print(list1)
-    # print(list2)
+    return list1, list2
+
+def problem1():
+    list1, list2 = getSortedLists("input1")
     print(calcDiff(list1, list2))
     
+def problem2():
+    list1, list2 = getSortedLists("input1")
+    freqDict = frequency(list2)
+    print(calcSimilarity(list1, freqDict))
 
 
-problem1()
+# problem1()
+problem2()
